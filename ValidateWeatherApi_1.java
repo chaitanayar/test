@@ -1,8 +1,10 @@
+package weatherApi;
+
 import java.util.concurrent.TimeUnit;
 
-import com.jayway.restassured.response.Response;
+/*import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ValidatableResponse;
-import com.jayway.restassured.response.ValidatableResponseOptions;
+import com.jayway.restassured.response.ValidatableResponseOptions;*/
 import io.restassured.RestAssured;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
@@ -21,18 +23,18 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
-public interface ValidatableResponse extends ValidatableResponseOptions<ValidatableResponse, Response> {
+/*public interface ValidatableResponse extends ValidatableResponseOptions<ValidatableResponse, Response> {
 
 
 }
-
+*/
 
 public class ValidateWeatherApi_1 {
 
     /**
      * Replace App Id with ur accessed AppId
      */
-    private static final Integer APPID = 1111111111;
+    private static final String APPID = "687e76f9f24e496603141058707edf09";
 
     /**
      * WEATHER_END_POINT is the path used it for the API
@@ -58,7 +60,7 @@ public class ValidateWeatherApi_1 {
 
     private static final String INVALID_ZIPCODE = "%^&**, 78";
 
-    private static final String CITYNAME = "London,UK";
+    private static final String CITYNAME = "Souix falls,USA";
 
     private static final String INVALID_CITYNAME = "*&FG****";
 
@@ -79,7 +81,7 @@ public class ValidateWeatherApi_1 {
         given().when().
                 get(WEATHER_END_POINT
                         + "?zip=" + ZIPCODE
-                        + "&appid=" + Integer.toString(APPID))
+                        + "&appid=" + APPID)
                 .then()
                 .statusCode(200);
 
@@ -90,7 +92,7 @@ public class ValidateWeatherApi_1 {
     public void passQueryParametersToGetRequest() {
 
         given().
-                params("zip", ZIPCODE, "appid" + Integer.toString(APPID))
+                params("zip", ZIPCODE, "appid" + APPID)
                 .when().
                 get(WEATHER_END_POINT).then().body("cod", equalTo(200));
 
@@ -102,7 +104,7 @@ public class ValidateWeatherApi_1 {
     public void validateTemperature() {
 
         int minTemp = given()
-                .params("zip", ZIPCODE, "appid", Integer.toString(APPID))
+                .params("zip", ZIPCODE, "appid", APPID)
                 .when()
                 .get(WEATHER_END_POINT)
                 .then()
@@ -110,7 +112,7 @@ public class ValidateWeatherApi_1 {
                 .path("main.temp_min");
 
         int maxTemp = given().
-                params("zip", ZIPCODE, "appid", Integer.toString(APPID))
+                params("zip", ZIPCODE, "appid", APPID)
                 .when()
                 .get(WEATHER_END_POINT)
                 .then()
@@ -118,7 +120,7 @@ public class ValidateWeatherApi_1 {
                 .path("main.temp_max");
 
         int temp = given().
-                params("zip", ZIPCODE, "appid",  Integer.toString(APPID))
+                params("zip", ZIPCODE, "appid",  APPID)
                 .when()
                 .get(WEATHER_END_POINT)
                 .then()
@@ -143,7 +145,7 @@ public class ValidateWeatherApi_1 {
     @Test
     public void negativeTest() {
 
-        given().params("zip", "94040,AAA", "appid", Integer.toString(APPID))
+        given().params("zip", "94040,AAA", "appid", APPID)
                 .when()
                 .get(WEATHER_END_POINT)
                 .then()
@@ -154,7 +156,7 @@ public class ValidateWeatherApi_1 {
     // Validate if the format is JSON
     public void checkResponseContentTypeJson() {
 
-        given().params("zip", "94040,us", "appid",  Integer.toString(APPID))
+        given().params("zip", "94040,us", "appid",  APPID)
                 .when()
                 .get(WEATHER_END_POINT)
                 .then()
@@ -166,7 +168,7 @@ public class ValidateWeatherApi_1 {
     @Test
     public void isKeyAvailable() {
 
-        given().params("zip", "94040,us", "appid",  Integer.toString(APPID))
+        given().params("zip", "94040,us", "appid",  APPID)
                 .when()
                 .get(WEATHER_END_POINT)
                 .then().
@@ -190,7 +192,7 @@ public class ValidateWeatherApi_1 {
     public void validateWithDataProviders(String zipCode, String cityName) {
 
         given().
-                params("zip", zipCode, "appid",  Integer.toString(APPID))
+                params("zip", zipCode, "appid",  APPID)
                 .when().
                 get(WEATHER_END_POINT).
                 then().
@@ -201,7 +203,7 @@ public class ValidateWeatherApi_1 {
     public void responseTimeValidation() {
 
         given().
-                params("zip", ZIPCODE, "appid",  Integer.toString(APPID))
+                params("zip", ZIPCODE, "appid",  APPID)
                 .when().
                 get(WEATHER_END_POINT).
                 then().
@@ -224,7 +226,7 @@ public class ValidateWeatherApi_1 {
     @Test
     public void useResponseSpecification() {
         given().
-                params("zip", ZIPCODE, "appid",  Integer.toString(APPID))
+                params("zip", ZIPCODE, "appid",  APPID)
                 .when().
                 get(WEATHER_END_POINT).then().
                 spec(respSpec).
@@ -237,8 +239,8 @@ public class ValidateWeatherApi_1 {
     /**
      * test for 5 day weather forecast -- BY CITY ID.
      */
-    @Test
-    public void testFiveDayWeatherForCastByCityId() {
+  /*  @Test
+    public void testFiveDayWeatherForCastByCityId1() {
 
         validatingResponseForForecast(given()
                         .params("id", LONDON_CITYID)
@@ -257,9 +259,9 @@ public class ValidateWeatherApi_1 {
 
     }
 
-    /**
+    *//**
      * test for 5 day weather forecast -- By geographic coordinates.
-     */
+     *//*
     @Test
     public void testFiveDayWeatherForCastByGeoCoordinates() {
 
@@ -280,9 +282,9 @@ public class ValidateWeatherApi_1 {
                 .statusCode(200));
     }
 
-    /**
+    *//**
      * test for 5 day weather forecast -- By ZIP code.
-     */
+     *//*
     @Test
     public void testFiveDayWeatherForCastByZipCode() {
         validatingResponseForForecast(given()
@@ -301,9 +303,9 @@ public class ValidateWeatherApi_1 {
 
     }
 
-    /**
+    *//**
      * to verify when the invalid params passed , to verify we wont get the response with keys exist.
-     */
+     *//*
     @Test
     public void testInvalidCityIdForWeatherForCast() {
 
@@ -320,9 +322,9 @@ public class ValidateWeatherApi_1 {
                 .body("$", not(hasKey("country")));
     }
 
-    /**
+    *//**
      * to verify when the invalid params passed , to verify we wont get the response with keys exist.
-     */
+     *//*
     @Test
     public void testInvalidZipCodeForWeatherForCast() {
 
@@ -339,10 +341,10 @@ public class ValidateWeatherApi_1 {
                 .body("$", not(hasKey("country")));
     }
 
-    /**
+    *//**
      * Method to ensure the all the values inside the forecast list is valid, and proper.
      * @param foreCastDataList
-     */
+     *//*
     private void validatingResponseForForecast(List<ForeCast> foreCastDataList) {
 
         assertNotNull(foreCastDataList);
@@ -371,10 +373,10 @@ public class ValidateWeatherApi_1 {
     }
 
 
-    /*******************TESTS FOR Historical data API***************************/
-    /**
+    *//*******************TESTS FOR Historical data API***************************//*
+    *//**
      * to verify when the invalid params passed , to verify we wont get the response with keys exist.
-     */
+     *//*
     @Test
     public void testInvalidCityNameForWeatherForCast() {
 
@@ -394,9 +396,9 @@ public class ValidateWeatherApi_1 {
                 .body("$", not(hasKey("country")));
     }
 
-    /**
+    *//**
      * test for History data Api  -- BY CITY NAME.
-     */
+     *//*
     @Test
     public void testFiveDayWeatherForCastByCityId() {
 
@@ -420,6 +422,7 @@ public class ValidateWeatherApi_1 {
                 .body("wind.speed", equalTo(5.1))
                 .body("wind.deg", equalTo(150))
                 .body("name", equalTo("Cairns"));
-    }
+    }*/
 
 }
+	
